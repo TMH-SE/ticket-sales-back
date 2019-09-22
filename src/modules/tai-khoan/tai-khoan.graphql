@@ -1,0 +1,19 @@
+directive @isAuthenticated on FIELD | FIELD_DEFINITION
+directive @isAdmin on FIELD | FIELD_DEFINITION
+type TaiKhoan {
+  id: ID
+  tenDangNhap: String
+  matKhau: String
+  userId: ID
+  isAdmin: Boolean
+  trangThai: Boolean
+}
+
+type Respone {
+  id: String
+  name: String
+}
+
+type Query {
+  hello: Respone @isAdmin
+}
