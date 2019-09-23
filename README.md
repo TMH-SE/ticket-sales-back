@@ -88,7 +88,7 @@ $ npm run start:prod
   $ git add .
 
   # commit code
-  # your comment must be concise and describe your what you did
+  # your comment must be concise and describe what you did
   $ git commit -m 'your comment'
 ```
 
