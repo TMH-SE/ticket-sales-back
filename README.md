@@ -62,9 +62,9 @@ $ npm run start:prod
 
 # Running the app with webpack
   # 1. Build webpack
-  $ npm run webpack
+    $ npm run webpack
   # 2. Once webpack started to watch files, run another command in the another command line window:
-  $ npm run start:webpack
+    $ npm run start:webpack
 ```
 
 ## 3. Git policy
