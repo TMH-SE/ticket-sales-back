@@ -10,7 +10,7 @@
 $ git clone https://github.com/TMH-SE/ticket-sales-backend.git
 ```
 
-#### 1.2 Create .env
+### 1.2 Create .env
 
 ```bash
 # follow the file .env.example
