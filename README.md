@@ -72,12 +72,12 @@ $ npm run start:prod
 ### 3.1 Branch
 
 ```bash
-  # create branch
+  # create branch before perform your task
   # naming branch follow the pattern: yourName_yourTask
   # e.g: hieu_khachHang
   $ git branch <your_branch>
 
-  # check out your branch before perform your task
+  # check out your branch before start code
   $ git checkout <your_branch>
 ```
 
