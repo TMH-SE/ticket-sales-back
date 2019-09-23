@@ -1,40 +1,54 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+  <img src="assets/images/logo.png" width="320" alt="Logo" />
 </p>
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 1. Preparation
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+### 1.1 Clone code into local
 
 ```bash
-$ npm install
+$ git clone https://github.com/TMH-SE/ticket-sales-backend.git
 ```
 
-## Running the app
+#### 1.2 Create .env
+
+```bash
+# follow the file .env.example
+SECRET_KEY=h3l1oW0rld
+PORT=<your_port_run_backend>
+NODE_ENV=development
+```
+
+### 1.3 Creat awsConfig.json
+
+```bash
+# follow the file .aws.json.example
+{
+"accessKeyId": <YOUR_ACCESS_KEY_ID>,
+"secretAccessKey": <YOUR_SECRET_ACCESS_KEY>,
+"sessionToken": <YOUR_SESSION_TOKEN>,
+"region": "us-east-1"
+}
+```
+
+### 1.4 Install dependencies
+
+```bash
+# using npm
+$ npm i
+
+# using yarn
+$ yarn add
+```
+
+### 1.5 Run dbseed
+
+```bash
+# create table and account admin
+$ npm run db:seed
+```
+
+## 2. Running the app
 
 ```bash
 # development
@@ -45,31 +59,55 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# Running the app with webpack
+  # 1. Build webpack
+  $ npm run webpack
+  # 2. Once webpack started to watch files, run another command in the another command line window:
+  $ npm run start:webpack
 ```
 
-## Test
+## 3. Git policy
+
+### 3.1 Branch
 
 ```bash
-# unit tests
-$ npm run test
+  # create branch
+  # naming branch follow the pattern: yourName_yourTask
+  # e.g: hieu_khachHang
+  $ git branch <your_branch>
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  # check out your branch before perform your task
+  $ git checkout <your_branch>
 ```
 
-## Support
+### 3.2 Commit code
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+  # save your changes
+  $ git add .
 
-## Stay in touch
+  # commit code
+  # your comment must be concise and describe your what you did
+  $ git commit -m 'your comment'
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 3.3 Pull code
 
-## License
+```bash
+  # always pull code before whenever start coding or push code to repository
+  $ git pull origin master
+```
 
-  Nest is [MIT licensed](LICENSE).
+### 3.4 Push code
+
+```bash
+  # push code from local to repository
+  $ git push origin <your_branch>
+```
+
+\*_*NOTE:*_ Before push code, you must pull code and fix conflict
+
+## 4. License
+
+Project is [MIT licensed](LICENSE).
