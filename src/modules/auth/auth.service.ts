@@ -8,7 +8,7 @@ import { isPasswordMatched } from '@utils'
 @Injectable()
 export class AuthService {
   constructor(private readonly commonService: CommonService) {}
-  async generateAccessToken(tk: TaiKhoan): Promise<string> {
+  async generateAccessToken(tk: TaiKhoan) {
     const token = await jwt.sign(
       {
         id: tk.id
@@ -18,10 +18,10 @@ export class AuthService {
         expiresIn: '30d'
       }
     )
-    return token
+    return { token, isAdmin: tk.isAdmin }
   }
 
-  async tradeToken(userName: string, password: string): Promise<string> {
+  async tradeToken(userName: string, password: string) {
     try {
       let taiKhoan
       await this.commonService

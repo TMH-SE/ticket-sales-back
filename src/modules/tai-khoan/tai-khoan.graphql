@@ -9,7 +9,11 @@ type TaiKhoan {
   trangThai: Boolean
 }
 
+type TaiKhoanRespone {
+  token: String
+}
+
 type Query {
-  login(userName: String!, passWord: String!): String
-  loginAdmin(userName: String!, passWord: String!): String
+  login(userName: String!, password: String!): TaiKhoanRespone
+  loginAdmin(userName: String!, password: String!): TaiKhoanRespone
 }

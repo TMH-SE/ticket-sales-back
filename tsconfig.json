@@ -10,17 +10,18 @@
     "lib": ["es5", "es2015.promise"],
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
-      "@src": ["src/*"],
-      "@utils": ["src/utils"],
-      "@config": ["src/config"],
-      "@entities": ["src/entities"],
-      "@constants": ["src/constants"]
+      "@src": ["./*"],
+      "@utils": ["./utils"],
+      "@config": ["./config"],
+      "@entities": ["./entities"],
+      "@constants": ["./constants"]
     },
     "incremental": true,
     "esModuleInterop": true,
     "moduleResolution": "node"
   },
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

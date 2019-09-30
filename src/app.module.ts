@@ -8,12 +8,12 @@ import { AuthModule } from './modules/auth/auth.module'
 import { CommonModule } from './modules/common/common.module'
 import { GraphqlModule } from './config/graphql/graphql.module'
 import { KhachHangModule } from './modules/khach-hang/khach-hang.module'
-import { NhanVienModule } from './modules/nhan-vien/nhan-vien.module';
-import { HoaDonModule } from './modules/hoa-don/hoa-don.module';
-import { VeXeModule } from './modules/ve-xe/ve-xe.module';
-import { ChuyenXeModule } from './modules/chuyen-xe/chuyen-xe.module';
-import { TuyenXeModule } from './modules/tuyen-xe/tuyen-xe.module';
-import { PhuongTienModule } from './modules/phuong-tien/phuong-tien.module';
+import { NhanVienModule } from './modules/nhan-vien/nhan-vien.module'
+import { HoaDonModule } from './modules/hoa-don/hoa-don.module'
+import { VeXeModule } from './modules/ve-xe/ve-xe.module'
+import { ChuyenXeModule } from './modules/chuyen-xe/chuyen-xe.module'
+import { TuyenXeModule } from './modules/tuyen-xe/tuyen-xe.module'
+import { PhuongTienModule } from './modules/phuong-tien/phuong-tien.module'
 @Module({
   imports: [
     GraphQLModule.forRootAsync({
