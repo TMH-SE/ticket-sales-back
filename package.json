@@ -16,7 +16,7 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "generate": "ts-node src/generate-typings",
-    "db:seed": "node src/dbseed.ts",
+    "db:seed": "node dbseed.ts",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
