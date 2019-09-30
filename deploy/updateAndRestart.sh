@@ -6,8 +6,6 @@ git clone https://minhhieutran11197:Hieu1234@gitlab.com/minhhieutran11197/ticket
 
 . ~/.nvm/nvm.sh
 
-pm2 delete TICKET_BACKEND
-
 pm2 status
 
 cd ticket-sales-back
