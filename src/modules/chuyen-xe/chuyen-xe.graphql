@@ -1,0 +1,8 @@
+type ChuyenXe {
+  id:ID
+  tuyenXeId: ID
+  xeId: ID
+  thoiGianKhoiHanh: String
+  dsGheTrong: [Int]
+  trangThai: Boolean
+}

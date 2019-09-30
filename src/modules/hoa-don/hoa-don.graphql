@@ -1,0 +1,7 @@
+type HoaDon {
+  id:ID
+  ngayDat: String
+  tongTien: Float
+  khachHangId: ID
+  trangThai: Boolean
+}

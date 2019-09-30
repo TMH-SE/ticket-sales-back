@@ -11,23 +11,9 @@ export class AppService {
   ) {}
   getHello(): string {
     this.authService
-      .tradeToken('admin', '1234567')
+      .tradeToken('admin', '12345678')
       .then(res => console.log(res))
       .catch(err => console.log(err))
-    //   this.commonService
-    //     .getItemsByForeignKey(
-    //       'TaiKhoan',
-    //       'userId',
-    //       '40b80e40-dc96-11e9-b654-338e909d341e'
-    // {
-    //   hoTen: 'Duc Hot Boy',
-    //   email: 'ducpm@gmail.com',
-    //   soCMND: '123456780',
-    //   soDienThoai: '0123456780',
-    //   diaChi: '12 Pham Van Dong'
-    // }
-    // )
-    // .then(res => console.log(res))
     return 'Hello World!'
   }
 }

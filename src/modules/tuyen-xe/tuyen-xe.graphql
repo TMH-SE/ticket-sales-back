@@ -1,0 +1,9 @@
+type TuyenXe {
+  id:ID
+  diemDi: String
+  diemDen: String
+  quangDuong: Int
+  thoiGian: Int
+  giaVe: Float
+  trangThai: Boolean
+}

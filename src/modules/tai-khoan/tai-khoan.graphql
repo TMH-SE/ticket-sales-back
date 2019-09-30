@@ -9,11 +9,7 @@ type TaiKhoan {
   trangThai: Boolean
 }
 
-type Respone {
-  id: String
-  name: String
-}
-
 type Query {
-  hello: Respone @isAdmin
+  login(userName: String!, passWord: String!): String
+  loginAdmin(userName: String!, passWord: String!): String
 }

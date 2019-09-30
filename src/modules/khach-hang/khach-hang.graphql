@@ -1,0 +1,9 @@
+type KhachHang {
+  id: ID
+  hoTen: String
+  email: String
+  soCMND: String
+  soDienThoai: String
+  diaChi: String
+  trangThai: Boolean
+}

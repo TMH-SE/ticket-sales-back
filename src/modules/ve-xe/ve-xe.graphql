@@ -1,0 +1,7 @@
+type VeXe {
+  id:ID
+  chuyenXeId: ID
+  viTriGhe: Int
+  hoaDonId: ID
+  trangThai: Boolean
+}

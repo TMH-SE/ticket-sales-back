@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common'
 import { docClient } from '@constants'
 import { v1 as uuid } from 'uuid'
 import { ApolloError } from 'apollo-server-express'
+import { TaiKhoan } from '@entities'
 
 @Injectable()
 export class CommonService {
@@ -145,7 +146,7 @@ export class CommonService {
     })
   }
 
-  async getTaiKhoan(userName: string) {
+  async getTaiKhoan(userName: string): Promise<TaiKhoan> {
     return new Promise((res, rej) => {
       const params = {
         TableName: 'TaiKhoan',
@@ -158,7 +159,7 @@ export class CommonService {
         if (err) {
           rej(err)
         } else {
-          res(data.Items[0])
+          res(new TaiKhoan(data.Items[0]))
         }
       })
     })
