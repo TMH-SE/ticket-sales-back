@@ -23,6 +23,6 @@ deployBackToAWS:
     - npm run generate
     - npm run db:seed
     - npm run build
-    - rsync -a -e "ssh -o 'StrictHostKeyChecking=no' ec2-user@3.229.129.81" . ec2-user@ec2-3-229-129-81.compute-1.amazonaws.com:/home/ec2-user/ticket-backend --delete
+    - rsync -av --progress -e "ssh -o 'StrictHostKeyChecking=no' ec2-user@3.229.129.81" . ec2-user@ec2-3-229-129-81.compute-1.amazonaws.com:/home/ec2-user/ticket-backend --delete
     - bash deploy/deploy.sh
   when: manual
