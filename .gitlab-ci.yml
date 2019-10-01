@@ -1,19 +1,18 @@
 image: node:latest
 
-before_script:
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client rsync -y )'
-
 stages:
   - deploy
 
-# lint and test are two different jobs in the same stage.
-# This allows us to run these two in parallel and making build faster
+cache:
+  paths:
+  - node_modules/
 
 deployBackToAWS:
   only:
     - master
   stage: deploy
   before_script: 
+     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client rsync -y )'
      - mkdir -p ~/.ssh     
      - echo -e "$SSH_SECRET_KEY" > ~/.ssh/id_rsa
      - chmod 600 ~/.ssh/id_rsa
