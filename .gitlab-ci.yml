@@ -17,5 +17,9 @@ deployBackToAWS:
      - echo -e "$SSH_SECRET_KEY" > ~/.ssh/id_rsa
      - chmod 600 ~/.ssh/id_rsa
   script:
+    - npm run generate
+    - npm run db:seed
+    - npm run build
+    - rsync -a -e "ssh -p 22" . ec2-user@3.229.129.81:/home/ec2-user/ticket-backend --delete
     - bash deploy/deploy.sh
   when: manual
