@@ -23,6 +23,7 @@ deployBackToAWS:
 # - npm run db:seed
   script:
     - npm run build
+    - cd ..
     - ls
     - scp -i ~/.ssh/id_rsa -o "StrictHostKeyChecking=no" -r . ec2-user@3.229.129.81:/home/ec2-user/ticket-backend/
     - bash deploy/deploy.s
