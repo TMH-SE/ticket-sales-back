@@ -19,10 +19,10 @@ deployBackToAWS:
      - echo -e "$SSH_SECRET_KEY" > ~/.ssh/id_rsa
      - chmod 600 ~/.ssh/id_rsa
      - npm install
+     - npm run generate
+# - npm run db:seed
   script:
-    - npm run generate
-    - npm run db:seed
     - npm run build
-    - rsync -av --progress -e "ssh -o 'StrictHostKeyChecking=no' ec2-user@3.229.129.81" "./" "/home/ec2-user/ticket-backend" --delete
-    - bash deploy/deploy.sh
+    - scp -i -o "StrictHostKeyChecking=no" -r . ec2-user@3.229.129.81:/home/ec2-user/ticket-backend/
+    - bash deploy/deploy.s
   when: manual
