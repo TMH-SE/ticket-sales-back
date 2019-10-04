@@ -8,7 +8,7 @@
 
 # pm2 status
 
-cd ticket-backend
+cd ticket-sales-back
 
 # echo "--------------Running npm install----------------"
 # npm install
