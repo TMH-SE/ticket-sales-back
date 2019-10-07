@@ -1,7 +1,17 @@
 // tslint:disable: no-var-requires
 const AWS = require('aws-sdk')
+const dotenv = require('dotenv')
 
-AWS.config.loadFromPath('./awsConfig.json')
+dotenv.config()
+
+process.env.NODE_ENV === 'development'
+  ? AWS.config.update({
+      accessKeyId: 'def4ult',
+      secretAccessKey: 'def4ult',
+      region: 'us-east-1',
+      endpoint: 'http://localhost:8000'
+    })
+  : AWS.config.loadFromPath('./awsConfig.json')
 
 const dynamodb = new AWS.DynamoDB()
 const docClient = new AWS.DynamoDB.DocumentClient()
@@ -35,7 +45,7 @@ async function dbseed() {
         'ChuyenXe',
         'PhuongTien'
       ].filter(name => data.TableNames.indexOf(name) === -1)
-      console.log(tableNames)
+
       tableNames.map(tableName => {
         const params = {
           TableName: tableName,
@@ -78,7 +88,7 @@ async function dbseed() {
             hoTen: 'Root',
             trangThai: true
           })
-        }, 5000)
+        }, 8000)
       }
     }
   })

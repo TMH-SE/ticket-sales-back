@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk'
+import config from 'config.env'
 
-AWS.config.loadFromPath('./awsConfig.json')
+AWS.config.update(config.aws)
 
 const dynamodb = new AWS.DynamoDB()
 const docClient = new AWS.DynamoDB.DocumentClient()

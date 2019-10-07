@@ -16,10 +16,9 @@ $ git clone https://github.com/TMH-SE/ticket-sales-backend.git
 # follow the file .env.example
 SECRET_KEY=h3l1oW0rld
 PORT=<your_port_run_backend>
-NODE_ENV=development
 ```
 
-### 1.3 Creat awsConfig.json
+### 1.3 Creat awsConfig.json (for production)
 
 ```bash
 # follow the file .aws.json.example
@@ -45,7 +44,7 @@ $ yarn add
 
 ```bash
 # create table and account admin
-$ npm run db:seed
+$ NODE_ENV=development npm run db:seed
 ```
 
 ## 2. Running the app
