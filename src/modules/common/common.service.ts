@@ -75,7 +75,7 @@ export class CommonService {
   }
 
   async getOneItem(tableName: string, id: string): Promise<any> {
-    return new Promise((res, rej) => {
+    try {
       const params = {
         TableName: tableName,
         KeyConditionExpression: '#id = :val',
@@ -86,18 +86,15 @@ export class CommonService {
           ':val': id
         }
       }
-      docClient.query(params, (err, data) => {
-        if (err) {
-          rej(err)
-        } else {
-          res(data.Items[0])
-        }
-      })
-    })
+      const data = await docClient.query(params).promise()
+      return data.Items[0]
+    } catch (error) {
+      throw new ApolloError(error, error.statusCode.toString())
+    }
   }
 
-  getItems(tableName: string) {
-    return new Promise((resolve, reject) => {
+  async getItems(tableName: string) {
+    try {
       const params = {
         TableName: tableName,
         FilterExpression: '#stt = :val',
@@ -108,14 +105,11 @@ export class CommonService {
           ':val': true
         }
       }
-      docClient.scan(params, (err, data) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(data.Items)
-        }
-      })
-    })
+      const data = await docClient.scan(params).promise()
+      return data.Items
+    } catch (error) {
+      throw new ApolloError(error, error.statusCode.toString())
+    }
   }
 
   async getItemsByForeignKey(
@@ -123,7 +117,7 @@ export class CommonService {
     foreignKey: string,
     foreignKeyValue: string
   ) {
-    return new Promise((res, rej) => {
+    try {
       const params = {
         TableName: tableName,
         FilterExpression: '#fk = :val and #stt = :sttVal',
@@ -136,18 +130,15 @@ export class CommonService {
           ':sttVal': true
         }
       }
-      docClient.scan(params, (err, data) => {
-        if (err) {
-          rej(err)
-        } else {
-          res(data.Items)
-        }
-      })
-    })
+      const data = await docClient.scan(params).promise()
+      return data.Items
+    } catch (error) {
+      throw new ApolloError(error, error.statusCode.toString())
+    }
   }
 
   async getTaiKhoan(userName: string): Promise<TaiKhoan> {
-    return new Promise((res, rej) => {
+    try {
       const params = {
         TableName: 'TaiKhoan',
         FilterExpression: 'tenDangNhap = :usr',
@@ -155,13 +146,14 @@ export class CommonService {
           ':usr': userName
         }
       }
-      docClient.scan(params, (err, data) => {
-        if (err) {
-          rej(err)
-        } else {
-          res(new TaiKhoan(data.Items[0]))
-        }
-      })
-    })
+      const data = await docClient.scan(params).promise()
+      if (data.Items[0]) {
+        return new TaiKhoan(data.Items[0])
+      } else {
+        return null
+      }
+    } catch (error) {
+      throw new ApolloError(error, error.statusCode.toString())
+    }
   }
 }

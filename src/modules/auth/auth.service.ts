@@ -23,20 +23,10 @@ export class AuthService {
 
   async tradeToken(userName: string, password: string) {
     try {
-      let taiKhoan
-      await this.commonService
-        .getTaiKhoan(userName)
-        .then(res => {
-          if (!res) {
-            throw new ApolloError('Unauthorized', '401')
-          } else {
-            taiKhoan = res
-          }
-        })
-        .catch(err => {
-          Logger.error(err)
-          throw new ApolloError(err, '500')
-        })
+      const taiKhoan = await this.commonService.getTaiKhoan(userName)
+      if (!taiKhoan) {
+        throw new ApolloError('Unauthorized', '401')
+      }
       if (!taiKhoan.trangThai) {
         throw new ApolloError('Locked', '423')
       }
@@ -45,43 +35,27 @@ export class AuthService {
       }
       return await this.generateAccessToken(taiKhoan)
     } catch (error) {
-      throw new ApolloError(error, error.extensions.code)
+      throw new ApolloError(error, error.statusCode || error.extensions.code)
     }
   }
 
   async verifyToken(token: string) {
     try {
       const decoded = await jwt.verify(token, process.env.SECRET_KEY)
-      let account
+      const account = await this.commonService.getOneItem(
+        'TaiKhoan',
+        decoded.id
+      )
       let user
-      await this.commonService
-        .getOneItem('TaiKhoan', decoded.id)
-        .then(res => (account = res))
-        .catch(err => {
-          Logger.error(err)
-          throw new ApolloError(err, '500')
-        })
       const isAdmin = account.isAdmin
       if (!account) {
         throw new ApolloError('Unauthorized', '401')
       } else if (!account.trangThai) {
         throw new ApolloError('Locked', '423')
       } else if (isAdmin) {
-        await this.commonService
-          .getOneItem('NhanVien', account.userId)
-          .then(res => (user = res))
-          .catch(err => {
-            Logger.error(err)
-            throw new ApolloError(err, '500')
-          })
+        user = await this.commonService.getOneItem('NhanVien', account.userId)
       } else {
-        await this.commonService
-          .getOneItem('KhachHang', account.userId)
-          .then(res => (user = res))
-          .catch(err => {
-            Logger.error(err)
-            throw new ApolloError(err, '500')
-          })
+        user = await this.commonService.getOneItem('KhachHang', account.userId)
       }
       return { currentUser: user, isAdmin }
     } catch (error) {
