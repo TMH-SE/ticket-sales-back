@@ -12,7 +12,7 @@
     "webpack": "rimraf dist && webpack --config webpack.config.js",
     "start:webpack": "node dist/server",
     "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
-    "start:prod": "NODE_ENV=production SECRET_KEY=h3l1oW0rld node -r ./tsconfig-paths-bootstrap.js dist/main.js",
+    "start:prod": "NODE_ENV=production SECRET_KEY=h3l1oW0rld PORT=8080 node -r ./tsconfig-paths-bootstrap.js dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "generate": "ts-node src/generate-typings",

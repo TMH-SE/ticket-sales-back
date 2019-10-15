@@ -2,8 +2,9 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import * as dotenv from 'dotenv'
 import chalk from 'chalk'
-import CustomLogger from './config/logger'
-import config from 'config.env'
+import CustomLogger from './common/loggers/logger'
+import config from './config.env'
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
 
 dotenv.config()
 
@@ -13,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: new CustomLogger()
   })
+  app.useGlobalInterceptors(new LoggingInterceptor())
   const { port } = config
   await app.listen(port)
 

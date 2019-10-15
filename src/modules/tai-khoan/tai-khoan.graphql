@@ -13,7 +13,20 @@ type TaiKhoanRespone {
   token: String
 }
 
+type User {
+  hoTen: String
+  email: String
+  soCMND: String
+  soDienThoai: String
+  diaChi: String
+  trangThai: Boolean
+}
+
 type Query {
+  me: User
+}
+
+type Mutation {
   login(userName: String!, password: String!): TaiKhoanRespone
   loginAdmin(userName: String!, password: String!): TaiKhoanRespone
 }
