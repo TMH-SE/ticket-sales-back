@@ -7,3 +7,23 @@ type TuyenXe {
   giaVe: Float
   trangThai: Boolean
 }
+
+type Query {
+  getAllTuyen: [TuyenXe]
+  getTuyenXe(id: ID!): TuyenXe
+  getTuyenByHanhTrinh(diemDi: String!, diemDen: String!): TuyenXe
+}
+
+type Mutation {
+  themTuyen(input: TuyenXeInput!): Boolean
+  capNhatTuyen(id: ID!, input: TuyenXeInput!): Boolean
+  xoaTuyen(id: ID!): Boolean
+}
+
+input TuyenXeInput {
+  diemDi: String!
+  diemDen: String!
+  quangDuong: Int!
+  thoiGian: Int!
+  giaVe: Float!
+}

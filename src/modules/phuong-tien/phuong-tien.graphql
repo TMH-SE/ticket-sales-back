@@ -1,7 +1,0 @@
-type PhuongTien {
-  id: ID
-  bienSoXe: String
-  loaiXe: String
-  soGhe: Int
-  trangThai: Boolean
-}

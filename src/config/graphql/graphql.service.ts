@@ -23,9 +23,9 @@ export class GraphqlService {
         return next()
       },
       isAdmin: (next, source, args, ctx) => {
-        const { isAdmin } = ctx
+        const { currentUser } = ctx
 
-        if (!isAdmin) {
+        if (!currentUser.isAdmin) {
           throw new ApolloError('Unauthorized', '401')
         }
 

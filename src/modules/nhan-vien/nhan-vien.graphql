@@ -1,5 +1,0 @@
-type TaiKhoan {
-  id: ID
-  hoTen: String
-  trangThai: Boolean
-}

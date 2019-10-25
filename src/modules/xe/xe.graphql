@@ -1,0 +1,24 @@
+type Xe {
+  id: ID
+  bienSoXe: String
+  loaiXe: String
+  soGhe: Int
+  trangThai: Boolean
+}
+
+type Query {
+  getAllXe: [Xe]
+  getXe(id: ID!): Xe
+}
+
+type Mutation {
+  themXe(input: XeInput!): Boolean
+  capNhatXe(id: ID!, input: XeInput!): Boolean
+  xoaXe(id: ID!): Boolean
+}
+
+input XeInput {
+  bienSoXe: String!
+  loaiXe: String!
+  soGhe: Int!
+}

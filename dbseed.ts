@@ -28,6 +28,31 @@ async function createItem(tableName, item) {
   })
 }
 
+// async function deleteDB() {
+//   const arr = ['DH2Data', 'NguoiDung', 'VeXe']
+//   arr.map(name => {
+//     const params = {
+//       TableName: name
+//     }
+
+//     dynamodb.deleteTable(params, (err, data) => {
+//       if (err) {
+//         console.error(
+//           'Unable to delete table. Error JSON:',
+//           JSON.stringify(err, null, 2)
+//         )
+//       } else {
+//         console.log(
+//           'Deleted table. Table description JSON:',
+//           JSON.stringify(data, null, 2)
+//         )
+//       }
+//     })
+//   })
+// }
+
+// deleteDB()
+
 async function dbseed() {
   dynamodb.listTables((err, data) => {
     if (err) {
@@ -35,36 +60,253 @@ async function dbseed() {
     }
     if (data) {
       console.log('---------------Database seeder is running-------------')
-      const tableNames = [
-        'TaiKhoan',
-        'NhanVien',
-        'KhachHang',
-        'HoaDon',
-        'VeXe',
-        'TuyenXe',
-        'ChuyenXe',
-        'PhuongTien'
-      ].filter(name => data.TableNames.indexOf(name) === -1)
+      const tableNames = ['NguoiDung', 'DH2Data', 'VeXe'].filter(
+        name => data.TableNames.indexOf(name) === -1
+      )
 
       tableNames.map(tableName => {
         const params = {
           TableName: tableName,
-          AttributeDefinitions: [
-            {
-              AttributeName: 'id',
-              AttributeType: 'S'
-            }
-          ],
-          KeySchema: [
-            {
-              AttributeName: 'id',
-              KeyType: 'HASH'
-            }
-          ],
           ProvisionedThroughput: {
-            ReadCapacityUnits: 10,
-            WriteCapacityUnits: 10
+            ReadCapacityUnits: 5,
+            WriteCapacityUnits: 5
           }
+        }
+        if (tableName === 'NguoiDung') {
+          Object.assign(params, {
+            AttributeDefinitions: [
+              {
+                AttributeName: 'id',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'tenDangNhap',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'email',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'soCMND',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'soDienThoai',
+                AttributeType: 'S'
+              }
+            ],
+            KeySchema: [
+              {
+                AttributeName: 'id',
+                KeyType: 'HASH'
+              }
+            ],
+            GlobalSecondaryIndexes: [
+              {
+                IndexName: 'UsernameIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'tenDangNhap',
+                    KeyType: 'HASH'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              },
+              {
+                IndexName: 'IDNumberIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'soCMND',
+                    KeyType: 'HASH'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              },
+              {
+                IndexName: 'EmailIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'email',
+                    KeyType: 'HASH'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              },
+              {
+                IndexName: 'PhoneIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'soDienThoai',
+                    KeyType: 'HASH'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              }
+            ]
+          })
+        } else if (tableName === 'DH2Data') {
+          Object.assign(params, {
+            AttributeDefinitions: [
+              {
+                AttributeName: 'pk',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'id',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'tuyenXeId',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'diemDi',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'diemDen',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'bienSoXe',
+                AttributeType: 'S'
+              }
+            ],
+            KeySchema: [
+              {
+                AttributeName: 'pk',
+                KeyType: 'HASH'
+              },
+              {
+                AttributeName: 'id',
+                KeyType: 'RANGE'
+              }
+            ],
+            GlobalSecondaryIndexes: [
+              {
+                IndexName: 'BienSoXeIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'pk',
+                    KeyType: 'HASH'
+                  },
+                  {
+                    AttributeName: 'bienSoXe',
+                    KeyType: 'RANGE'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              },
+              {
+                IndexName: 'ChuyenXeIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'pk',
+                    KeyType: 'HASH'
+                  },
+                  {
+                    AttributeName: 'tuyenXeId',
+                    KeyType: 'RANGE'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              },
+              {
+                IndexName: 'TuyenXeIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'diemDi',
+                    KeyType: 'HASH'
+                  },
+                  {
+                    AttributeName: 'diemDen',
+                    KeyType: 'RANGE'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              }
+            ]
+          })
+        } else {
+          Object.assign(params, {
+            AttributeDefinitions: [
+              {
+                AttributeName: 'id',
+                AttributeType: 'S'
+              },
+              {
+                AttributeName: 'khachHangId',
+                AttributeType: 'S'
+              }
+            ],
+            KeySchema: [
+              {
+                AttributeName: 'id',
+                KeyType: 'HASH'
+              }
+            ],
+            GlobalSecondaryIndexes: [
+              {
+                IndexName: 'KhachHangIdIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'khachHangId',
+                    KeyType: 'HASH'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              }
+            ]
+          })
         }
         dynamodb.createTable(params, error => {
           if (error) {
@@ -74,18 +316,13 @@ async function dbseed() {
       })
       if (tableNames.length !== 0) {
         setTimeout(async () => {
-          createItem('TaiKhoan', {
+          createItem('NguoiDung', {
             id: 'b7567d40-dc94-11e9-b2a4-cf50d869735b',
             tenDangNhap: 'admin',
             matKhau:
               '$2b$10$FfO6XwXuCQ8a.lH9ndRxbOkFh7VE0udT0oQBIhjdVcXE2SWMzjVCa',
-            userId: '40b80e40-dc96-11e9-b654-338e909d341e',
-            isAdmin: true,
-            trangThai: true
-          })
-          createItem('NhanVien', {
-            id: '40b80e40-dc96-11e9-b654-338e909d341e',
             hoTen: 'Root',
+            isAdmin: true,
             trangThai: true
           })
         }, 8000)

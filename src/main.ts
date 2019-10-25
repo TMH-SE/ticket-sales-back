@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import CustomLogger from './common/loggers/logger'
 import config from './config.env'
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
+import { ValidationPipePipe } from './common/pipes/validation-pipe.pipe'
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ async function bootstrap() {
     logger: new CustomLogger()
   })
   app.useGlobalInterceptors(new LoggingInterceptor())
+  app.useGlobalPipes(new ValidationPipePipe())
   const { port } = config
   await app.listen(port)
 

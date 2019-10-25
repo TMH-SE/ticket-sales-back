@@ -3,6 +3,45 @@ type ChuyenXe {
   tuyenXeId: ID
   xeId: ID
   thoiGianKhoiHanh: String
+  soGheTrong: Int
   dsGheTrong: [Int]
   trangThai: Boolean
+}
+
+type ChuyenXeRespone {
+  id: ID
+  diemDi: String
+  diemDen: String
+  thoiGianKhoiHanh: String
+  dsGheTrong: [Int]
+  loaiXe: String
+  quangDuong: Int
+  thoiGian: Int
+  giaVe: Float
+}
+
+type Query {
+  timChuyen(searchData: SearchData!): ChuyenXeRespone
+  getChuyenTheoTuyenXeId(tuyenXeId: ID!): [ChuyenXeRespone]
+}
+
+type Mutation {
+  themChuyen(input: ChuyenXeInput!): Boolean
+  capNhatChuyen(id: ID!, input: ChuyenXeInput!): Boolean
+  xoaChuyen(id: ID!): Boolean
+}
+
+input SearchData {
+  diemDi: String
+  diemDen: String
+  thoiGianKhoiHanh: String
+  soLuong: Int
+}
+
+input ChuyenXeInput {
+  tuyenXeId: ID
+  xeId: ID
+  thoiGianKhoiHanh: String
+  soGheTrong: Int
+  dsGheTrong: [Int]
 }

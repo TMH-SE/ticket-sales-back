@@ -1,0 +1,38 @@
+type NguoiDung {
+  id: ID
+  hoTen: String
+  email: String
+  soCMND: String
+  soDienThoai: String
+  diaChi: String
+  tenDangNhap: String
+  matKhau: String
+  isAdmin: Boolean
+  trangThai: Boolean
+}
+
+type LoginRespone {
+  token: String
+  isAdmin: Boolean
+}
+
+type Query {
+  me: NguoiDung
+  getAllNguoiDung: [NguoiDung]
+}
+
+type Mutation {
+  login(userName: String!, password: String!): LoginRespone
+  dangKyTaiKhoan(input: NguoiDungInput!): Boolean
+  capNhatThongTin(input: NguoiDungInput!): Boolean
+}
+
+input NguoiDungInput {
+  hoTen: String!
+  email: String!
+  soCMND: String!
+  soDienThoai: String!
+  diaChi: String!
+  tenDangNhap: String!
+  matKhau: String!
+}

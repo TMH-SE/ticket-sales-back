@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common'
-import { ChuyenXeService } from './chuyen-xe.service'
 import { ChuyenXeResolver } from './chuyen-xe.resolver'
 
 @Module({
-  providers: [ChuyenXeService, ChuyenXeResolver]
+  providers: [ChuyenXeResolver]
 })
 export class ChuyenXeModule {}

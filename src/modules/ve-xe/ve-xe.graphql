@@ -1,7 +1,39 @@
+type KhachHangInfo {
+  hoTen: String
+  email: String
+  soCMND: String
+  soDienThoai: String
+  diaChi: String
+}
+
 type VeXe {
   id:ID
   chuyenXeId: ID
+  khachHangId: ID
+  khachHangInfo: KhachHangInfo
   viTriGhe: Int
-  hoaDonId: ID
   trangThai: Boolean
+}
+
+type Query {
+  getVeXeByKhachHang(khachHangId: ID): VeXe
+}
+
+type Mutation {
+  themVe(input: VeInput): Boolean
+}
+
+input VeInput {
+  chuyenXeId: ID
+  khachHangId: ID
+  khachHangInfo: KhachHangInput
+  viTriGhe: Int
+}
+
+input KhachHangInput {
+  hoTen: String
+  email: String
+  soCMND: String
+  soDienThoai: String
+  diaChi: String
 }
