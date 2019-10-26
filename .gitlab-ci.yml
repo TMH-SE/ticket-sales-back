@@ -3,9 +3,9 @@ image: node:latest
 stages:
   - deploy
 
-cache:
-  paths:
-  - node_modules/
+# cache:
+#   paths:
+#   - node_modules/
 
 deployBackToAWS:
   only:
