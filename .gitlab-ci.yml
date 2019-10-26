@@ -25,4 +25,3 @@ deployBackToAWS:
     - ssh -o "StrictHostKeyChecking=no" ec2-user@3.229.129.81 'rm -rf /home/ec2-user/ticket-sales-back/'
     - scp -i ~/.ssh/id_rsa -o "StrictHostKeyChecking=no" -r ../ticket-sales-back/ ec2-user@3.229.129.81:/home/ec2-user/
     - bash deploy/deploy.sh
-  when: manual

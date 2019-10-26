@@ -4,7 +4,9 @@ pm2 status
 
 cd ticket-sales-back
 
-npm rebuild bcrypt --update-binary
+rm -rf node_modules/
+
+npm i
 
 echo "--------------Start app--------------------"
 pm2 start --name TICKET_BACKEND npm -- run start:prod
