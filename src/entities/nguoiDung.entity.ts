@@ -5,6 +5,7 @@ export class NguoiDung {
   soCMND: string
   soDienThoai: string
   tenDangNhap: string
+  diaChi: string
   matKhau: string
   isAdmin: boolean
   trangThai: boolean
@@ -20,6 +21,7 @@ export interface NguoiDungInput {
   hoTen: string
   email: string
   soCMND: string
+  diaChi: string
   soDienThoai: string
   tenDangNhap: string
   matKhau: string

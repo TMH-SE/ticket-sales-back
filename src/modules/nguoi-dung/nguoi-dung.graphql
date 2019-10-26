@@ -25,6 +25,7 @@ type Mutation {
   login(userName: String!, password: String!): LoginRespone
   dangKyTaiKhoan(input: NguoiDungInput!): Boolean
   capNhatThongTin(input: NguoiDungInput!): Boolean
+  thayDoiMatKhau(oldPassword: String!, newPassword: String!): Boolean
 }
 
 input NguoiDungInput {
@@ -33,6 +34,6 @@ input NguoiDungInput {
   soCMND: String!
   soDienThoai: String!
   diaChi: String!
-  tenDangNhap: String!
-  matKhau: String!
+  tenDangNhap: String
+  matKhau: String
 }

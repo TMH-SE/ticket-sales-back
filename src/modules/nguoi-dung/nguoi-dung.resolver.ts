@@ -3,7 +3,7 @@ import { ApolloError } from 'apollo-server-core'
 import { AuthService } from './../auth/auth.service'
 import { NguoiDungInput, NguoiDung } from '@entities'
 import { CommonService } from './../common/common.service'
-import { hashPassword } from './../../utils/password-bcrypt'
+import { isPasswordMatched, hashPassword } from '@utils'
 
 @Resolver('NguoiDung')
 export class NguoiDungResolver {
@@ -37,23 +37,30 @@ export class NguoiDungResolver {
   async dangKyTaiKhoan(@Args('input') input: NguoiDungInput) {
     try {
       const { tenDangNhap, email, soCMND, soDienThoai } = input
-      if (
-        (await this.getUserByUsername(tenDangNhap)) ||
-        (await this.getUserByEmail(email)) ||
-        (await this.getUserByIDNumber(soCMND)) ||
-        (await this.getUserByPhone(soDienThoai))
-      ) {
-        return false
-      } else {
-        this.commonService.createItem('NguoiDung', null, {
-          ...input,
-          matKhau: await hashPassword(input.matKhau),
-          isAdmin: false
-        })
-        return true
+      const user1 = await this.getUserByUsername(tenDangNhap)
+      const user2 = await this.getUserByEmail(email)
+      const user3 = await this.getUserByIDNumber(soCMND)
+      const user4 = await this.getUserByPhone(soDienThoai)
+      if (user1) {
+        throw new ApolloError('Tên đăng nhập đã tồn tại', 'Conflict')
       }
+      if (user2) {
+        throw new ApolloError('Email đã được đăng ký', 'Conflict')
+      }
+      if (user3) {
+        throw new ApolloError('Số CMND đã được đăng ký', 'Conflict')
+      }
+      if (user4) {
+        throw new ApolloError('Số điện thoại này đã được đăng ký', 'Conflict')
+      }
+      this.commonService.createItem('NguoiDung', null, {
+        ...input,
+        matKhau: await hashPassword(input.matKhau),
+        isAdmin: false
+      })
+      return true
     } catch (error) {
-      throw new ApolloError(error)
+      throw new ApolloError(error.message)
     }
   }
 
@@ -64,22 +71,18 @@ export class NguoiDungResolver {
   ) {
     try {
       const { id } = currentUser
-      const { tenDangNhap, email, soCMND, soDienThoai } = input
-      const user1 = await this.getUserByUsername(tenDangNhap)
+      const { email, soCMND, soDienThoai } = input
       const user2 = await this.getUserByEmail(email)
       const user3 = await this.getUserByIDNumber(soCMND)
       const user4 = await this.getUserByPhone(soDienThoai)
-      if (user1 && user1.id !== id) {
-        return false
-      }
       if (user2 && user2.id !== id) {
-        return false
+        throw new ApolloError('Email đã được đăng ký', 'Conflict')
       }
       if (user3 && user3.id !== id) {
-        return false
+        throw new ApolloError('Số CMND đã được đăng ký', 'Conflict')
       }
       if (user4 && user4.id !== id) {
-        return false
+        throw new ApolloError('Số điện thoại này đã được đăng ký', 'Conflict')
       }
       await this.commonService.updateItem('NguoiDung', null, id, {
         ...input,
@@ -88,7 +91,46 @@ export class NguoiDungResolver {
       })
       return true
     } catch (error) {
-      throw new ApolloError(error)
+      console.log(error)
+      throw new ApolloError(error.message)
+    }
+  }
+
+  @Mutation()
+  async thayDoiMatKhau(
+    @Context('currentUser') currentUser: NguoiDung,
+    @Args('oldPassword') oldPassword: string,
+    @Args('newPassword') newPassword: string
+  ) {
+    try {
+      if (!isPasswordMatched(oldPassword, currentUser.matKhau)) {
+        throw new ApolloError('Mật khẩu cũ của bạn không đúng', 'Unauthorized')
+      } else {
+        const {
+          hoTen,
+          email,
+          soCMND,
+          soDienThoai,
+          diaChi,
+          tenDangNhap,
+          isAdmin,
+          trangThai
+        } = currentUser
+        this.commonService.updateItem('NguoiDung', null, currentUser.id, {
+          hoTen,
+          email,
+          soCMND,
+          soDienThoai,
+          diaChi,
+          tenDangNhap,
+          isAdmin,
+          trangThai,
+          matKhau: await hashPassword(newPassword)
+        })
+        return true
+      }
+    } catch (error) {
+      throw new ApolloError(error.message)
     }
   }
 
