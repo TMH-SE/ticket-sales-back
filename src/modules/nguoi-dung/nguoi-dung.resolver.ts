@@ -4,6 +4,7 @@ import { AuthService } from './../auth/auth.service'
 import { NguoiDungInput, NguoiDung } from '@entities'
 import { CommonService } from './../common/common.service'
 import { isPasswordMatched, hashPassword } from '@utils'
+import { v1 } from 'uuid'
 
 @Resolver('NguoiDung')
 export class NguoiDungResolver {
@@ -13,6 +14,7 @@ export class NguoiDungResolver {
   ) {}
   @Query()
   async me(@Context('currentUser') currentUser: any) {
+    console.log(v1())
     return currentUser
   }
 

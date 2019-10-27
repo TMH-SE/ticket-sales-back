@@ -325,7 +325,25 @@ async function dbseed() {
             isAdmin: true,
             trangThai: true
           })
-        }, 8000)
+          createItem('NguoiDung', {
+            id: 'b126c9e0-f867-11e9-93a3-a505e5b67c1f',
+            tenDangNhap: 'mod1',
+            matKhau:
+              '$2b$10$FfO6XwXuCQ8a.lH9ndRxbOkFh7VE0udT0oQBIhjdVcXE2SWMzjVCa',
+            hoTen: 'Mod 1',
+            isAdmin: true,
+            trangThai: true
+          })
+          createItem('NguoiDung', {
+            id: 'b0c45e90-f867-11e9-93a3-a505e5b67c1f',
+            tenDangNhap: 'mod2',
+            matKhau:
+              '$2b$10$FfO6XwXuCQ8a.lH9ndRxbOkFh7VE0udT0oQBIhjdVcXE2SWMzjVCa',
+            hoTen: 'Mod 2',
+            isAdmin: true,
+            trangThai: true
+          })
+        }, 15000)
       }
     }
   })
