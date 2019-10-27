@@ -4,7 +4,6 @@ import { AuthService } from './../auth/auth.service'
 import { NguoiDungInput, NguoiDung } from '@entities'
 import { CommonService } from './../common/common.service'
 import { isPasswordMatched, hashPassword } from '@utils'
-import { v1 } from 'uuid'
 
 @Resolver('NguoiDung')
 export class NguoiDungResolver {
@@ -14,7 +13,6 @@ export class NguoiDungResolver {
   ) {}
   @Query()
   async me(@Context('currentUser') currentUser: any) {
-    console.log(v1())
     return currentUser
   }
 
@@ -142,6 +140,7 @@ export class NguoiDungResolver {
         'NguoiDung',
         'EmailIndex',
         'email = :email',
+        null,
         {},
         {
           ':email': email
@@ -158,6 +157,7 @@ export class NguoiDungResolver {
         'NguoiDung',
         'PhoneIndex',
         'soDienThoai = :phone',
+        null,
         {},
         {
           ':phone': phone
@@ -175,6 +175,7 @@ export class NguoiDungResolver {
         'NguoiDung',
         'UsernameIndex',
         'tenDangNhap = :usr',
+        null,
         {},
         {
           ':usr': username
@@ -192,6 +193,7 @@ export class NguoiDungResolver {
         'NguoiDung',
         'IDNumberIndex',
         'soCMND = :idNum',
+        null,
         {},
         {
           ':idNum': idNum

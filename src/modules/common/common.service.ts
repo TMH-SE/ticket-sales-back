@@ -197,6 +197,7 @@ export class CommonService {
     tableName: 'DH2Data' | 'NguoiDung' | 'VeXe',
     indexName: string,
     keyConditionExpression: string,
+    filterExpression: string,
     expressionAttributeNames: any,
     expressionAttributeValues: any
   ) {
@@ -205,7 +206,9 @@ export class CommonService {
         TableName: tableName,
         IndexName: indexName,
         KeyConditionExpression: keyConditionExpression,
-        FilterExpression: '#stt = :sttVal',
+        FilterExpression: `#stt = :sttVal ${
+          filterExpression ? `and ${filterExpression}` : ''
+        }`,
         ExpressionAttributeNames: {
           ...expressionAttributeNames,
           '#stt': 'trangThai'
@@ -229,6 +232,7 @@ export class CommonService {
         'NguoiDung',
         'UsernameIndex',
         'tenDangNhap = :usr',
+        null,
         null,
         { ':usr': userName }
       )

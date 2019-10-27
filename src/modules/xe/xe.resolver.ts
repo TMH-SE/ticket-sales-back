@@ -32,6 +32,7 @@ export class XeResolver {
         'DH2Data',
         'BienSoXeIndex',
         '#pk = :pkVal and #bienSoXe = :val',
+        null,
         {
           '#pk': 'pk',
           '#bienSoXe': 'bienSoXe'
@@ -59,6 +60,7 @@ export class XeResolver {
         'DH2Data',
         'BienSoXeIndex',
         '#pk = :pkVal and #bienSoXe = :val',
+        null,
         {
           '#pk': 'pk',
           '#bienSoXe': 'bienSoXe'

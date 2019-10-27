@@ -2,7 +2,7 @@ type ChuyenXe {
   id:ID
   tuyenXeId: ID
   xeId: ID
-  thoiGianKhoiHanh: String
+  thoiGianKhoiHanh: Float
   soGheTrong: Int
   dsGheTrong: [Int]
   trangThai: Boolean
@@ -12,7 +12,8 @@ type ChuyenXeRespone {
   id: ID
   diemDi: String
   diemDen: String
-  thoiGianKhoiHanh: String
+  thoiGianKhoiHanh: Float
+  soGheTrong: Int
   dsGheTrong: [Int]
   loaiXe: String
   quangDuong: Int
@@ -21,7 +22,8 @@ type ChuyenXeRespone {
 }
 
 type Query {
-  timChuyen(searchData: SearchData!): ChuyenXeRespone
+  getAllChuyen: [ChuyenXeRespone]
+  timChuyen(searchData: SearchData!): [ChuyenXeRespone]
   getChuyenTheoTuyenXeId(tuyenXeId: ID!): [ChuyenXeRespone]
 }
 
@@ -34,14 +36,14 @@ type Mutation {
 input SearchData {
   diemDi: String
   diemDen: String
-  thoiGianKhoiHanh: String
+  thoiGianKhoiHanh: Float
   soLuong: Int
 }
 
 input ChuyenXeInput {
   tuyenXeId: ID
   xeId: ID
-  thoiGianKhoiHanh: String
+  thoiGianKhoiHanh: Float
   soGheTrong: Int
   dsGheTrong: [Int]
 }

@@ -1,4 +1,168 @@
-import { Resolver } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { ApolloError } from 'apollo-server-core'
+import { CommonService } from './../common/common.service'
+import { ChuyenXeInput, SearchData } from './../../entities/chuyenXe.entity'
 
 @Resolver('ChuyenXe')
-export class ChuyenXeResolver {}
+export class ChuyenXeResolver {
+  constructor(private readonly commonService: CommonService) {}
+
+  @Query()
+  async getAllChuyen() {
+    try {
+      const allChuyen = await this.commonService.getItems(
+        'DH2Data',
+        'dh2_chuyen'
+      )
+      const tuyens = {}
+      const xes = {}
+      const chuyens = allChuyen.map(async chuyen => {
+        const {
+          id,
+          tuyenXeId,
+          xeId,
+          thoiGianKhoiHanh,
+          soGheTrong,
+          dsGheTrong
+        } = chuyen
+
+        if (!tuyens[tuyenXeId]) {
+          const {
+            diemDi,
+            diemDen,
+            quangDuong,
+            thoiGian,
+            giaVe
+          } = await this.commonService.getItemWithKey(
+            'DH2Data',
+            'dh2_tuyen',
+            tuyenXeId
+          )
+          tuyens[tuyenXeId] = { diemDi, diemDen, quangDuong, thoiGian, giaVe }
+        }
+        if (!xes[xeId]) {
+          const { loaiXe } = await this.commonService.getItemWithKey(
+            'DH2Data',
+            'dh2_xe',
+            xeId
+          )
+          xes[xeId] = { loaiXe }
+        }
+        return {
+          id,
+          thoiGianKhoiHanh,
+          soGheTrong,
+          dsGheTrong,
+          ...xes[xeId],
+          ...tuyens[tuyenXeId]
+        }
+      })
+      return chuyens
+    } catch (error) {
+      throw new ApolloError(error)
+    }
+  }
+
+  @Query()
+  async timChuyen(@Args('searchData') searchData: SearchData) {
+    try {
+      const { diemDi, diemDen, thoiGianKhoiHanh, soLuong } = searchData
+      const data = await this.commonService.getItemsByIndex(
+        'DH2Data',
+        'TuyenXeIndex',
+        '#diemDi = :diemDi and #diemDen = :diemDen',
+        null,
+        {
+          '#diemDi': 'diemDi',
+          '#diemDen': 'diemDen'
+        },
+        {
+          ':diemDi': diemDi,
+          ':diemDen': diemDen
+        }
+      )
+
+      const { quangDuong, thoiGian, giaVe } = data[0]
+
+      const chuyens = await this.commonService.getItemsByIndex(
+        'DH2Data',
+        'ChuyenXeIndex',
+        '#pk = :pkVal and #tuyenXeId = :tuyenXeId',
+        '#soGheTrong >= :soLuong and #thoiGianKhoiHanh between :date1 and :date2',
+        {
+          '#pk': 'pk',
+          '#tuyenXeId': 'tuyenXeId',
+          '#soGheTrong': 'soGheTrong',
+          '#thoiGianKhoiHanh': 'thoiGianKhoiHanh'
+        },
+        {
+          ':pkVal': 'dh2_chuyen',
+          ':tuyenXeId': data[0].id,
+          ':soLuong': soLuong,
+          ':date1': thoiGianKhoiHanh,
+          ':date2': thoiGianKhoiHanh + 24 * 60 * 60 * 1000 - 1
+        }
+      )
+      const xes = {}
+      const allChuyen = chuyens.map(async chuyen => {
+        const { id, xeId, soGheTrong, dsGheTrong } = chuyen
+        if (!xes[xeId]) {
+          const { loaiXe } = await this.commonService.getItemWithKey(
+            'DH2Data',
+            'dh2_xe',
+            xeId
+          )
+          xes[xeId] = { loaiXe }
+        }
+        return {
+          id,
+          thoiGianKhoiHanh: chuyen.thoiGianKhoiHanh,
+          soGheTrong,
+          dsGheTrong,
+          quangDuong,
+          thoiGian,
+          giaVe,
+          diemDi,
+          diemDen,
+          ...xes[xeId]
+        }
+      })
+      return allChuyen
+    } catch (error) {
+      throw new ApolloError(error)
+    }
+  }
+
+  @Mutation()
+  async themChuyen(@Args('input') input: ChuyenXeInput) {
+    try {
+      await this.commonService.createItem('DH2Data', 'dh2_chuyen', { ...input })
+      return true
+    } catch (error) {
+      throw new ApolloError(error)
+    }
+  }
+
+  @Mutation()
+  async capNhatChuyen(
+    @Args('input') input: ChuyenXeInput,
+    @Args('id') id: string
+  ) {
+    try {
+      this.commonService.updateItem('DH2Data', 'dh2_chuyen', id, { ...input })
+      return true
+    } catch (error) {
+      throw new ApolloError(error)
+    }
+  }
+
+  @Mutation()
+  xoaChuyen(@Args('id') id: string) {
+    try {
+      this.commonService.deleteItem('DH2Data', 'dh2_chuyen', id)
+      return true
+    } catch (error) {
+      throw new ApolloError(error)
+    }
+  }
+}

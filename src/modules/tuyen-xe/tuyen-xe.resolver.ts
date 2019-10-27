@@ -34,6 +34,7 @@ export class TuyenXeResolver {
         'DH2Data',
         'TuyenXeIndex',
         '#diemDi = :diemDi and #diemDen = :diemDen',
+        null,
         {
           '#diemDi': 'diemDi',
           '#diemDen': 'diemDen'
