@@ -50,6 +50,8 @@ export class ChuyenXeResolver {
         }
         return {
           id,
+          tuyenXeId,
+          xeId,
           thoiGianKhoiHanh,
           soGheTrong,
           dsGheTrong,
@@ -105,7 +107,7 @@ export class ChuyenXeResolver {
       )
       const xes = {}
       const allChuyen = chuyens.map(async chuyen => {
-        const { id, xeId, soGheTrong, dsGheTrong } = chuyen
+        const { id, xeId, tuyenXeId, soGheTrong, dsGheTrong } = chuyen
         if (!xes[xeId]) {
           const { loaiXe } = await this.commonService.getItemWithKey(
             'DH2Data',
@@ -116,6 +118,8 @@ export class ChuyenXeResolver {
         }
         return {
           id,
+          tuyenXeId,
+          xeId,
           thoiGianKhoiHanh: chuyen.thoiGianKhoiHanh,
           soGheTrong,
           dsGheTrong,
@@ -136,7 +140,16 @@ export class ChuyenXeResolver {
   @Mutation()
   async themChuyen(@Args('input') input: ChuyenXeInput) {
     try {
-      await this.commonService.createItem('DH2Data', 'dh2_chuyen', { ...input })
+      const { soGhe } = await this.commonService.getItemWithKey(
+        'DH2Data',
+        'dh2_xe',
+        input.xeId
+      )
+      await this.commonService.createItem('DH2Data', 'dh2_chuyen', {
+        ...input,
+        soGheTrong: soGhe,
+        dsGheTrong: Array.from(Array(soGhe).keys())
+      })
       return true
     } catch (error) {
       throw new ApolloError(error)

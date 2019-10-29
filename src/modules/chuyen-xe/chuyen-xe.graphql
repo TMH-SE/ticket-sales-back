@@ -10,6 +10,8 @@ type ChuyenXe {
 
 type ChuyenXeRespone {
   id: ID
+  tuyenXeId: ID
+  xeId: ID
   diemDi: String
   diemDen: String
   thoiGianKhoiHanh: Float
@@ -44,6 +46,4 @@ input ChuyenXeInput {
   tuyenXeId: ID
   xeId: ID
   thoiGianKhoiHanh: Float
-  soGheTrong: Int
-  dsGheTrong: [Int]
 }

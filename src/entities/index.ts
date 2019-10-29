@@ -1,3 +1,5 @@
 export * from './nguoiDung.entity'
 export * from './xe.entity'
 export * from './tuyenXe.entity'
+export * from './chuyenXe.entity'
+export * from './veXe.entity'

@@ -25,8 +25,6 @@ export interface ChuyenXeInput {
   tuyenXeId: string
   xeId: string
   thoiGianKhoiHanh: number
-  soGheTrong: number
-  dsGheTrong: number[]
 }
 
 export interface SearchData {

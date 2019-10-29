@@ -27,7 +27,7 @@ input VeInput {
   chuyenXeId: ID
   khachHangId: ID
   khachHangInfo: KhachHangInput
-  viTriGhe: Int
+  viTriGhe: [Int]
 }
 
 input KhachHangInput {

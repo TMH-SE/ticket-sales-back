@@ -2,6 +2,7 @@ export class Xe {
   id: string
   bienSoXe: string
   loaiXe: string
+  soGhe: number
   trangThai: boolean
 }
 
