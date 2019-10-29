@@ -15,9 +15,9 @@ type Query {
 }
 
 type Mutation {
-  themTuyen(input: TuyenXeInput!): Boolean
-  capNhatTuyen(id: ID!, input: TuyenXeInput!): Boolean
-  xoaTuyen(id: ID!): Boolean
+  themTuyen(input: TuyenXeInput!): Boolean @isAdmin
+  capNhatTuyen(id: ID!, input: TuyenXeInput!): Boolean @isAdmin
+  xoaTuyen(id: ID!): Boolean @isAdmin
 }
 
 input TuyenXeInput {

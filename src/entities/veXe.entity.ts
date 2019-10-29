@@ -17,7 +17,6 @@ export interface KhachHangInfo {
 
 export interface VeInput {
   chuyenXeId: string
-  khachHangId: string
   khachHangInfo: KhachHangInfo
   viTriGhe: number[]
 }

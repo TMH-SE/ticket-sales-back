@@ -1,8 +1,8 @@
+import { ApolloError } from 'apollo-server-core'
+import { AuthService } from './../../modules/auth/auth.service'
 import { GqlModuleOptions } from '@nestjs/graphql'
 import { Injectable } from '@nestjs/common'
-import { ApolloError } from 'apollo-server-core'
 import { PubSub } from 'graphql-subscriptions'
-import { AuthService } from './../../modules/auth/auth.service'
 
 const pubSub = new PubSub()
 const endpoint = 'ticketgraphql'
@@ -24,7 +24,6 @@ export class GraphqlService {
       },
       isAdmin: (next, source, args, ctx) => {
         const { currentUser } = ctx
-
         if (!currentUser.isAdmin) {
           throw new ApolloError('Unauthorized', '401')
         }

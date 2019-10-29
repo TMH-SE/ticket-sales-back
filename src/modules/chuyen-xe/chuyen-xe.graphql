@@ -17,6 +17,7 @@ type ChuyenXeRespone {
   thoiGianKhoiHanh: Float
   soGheTrong: Int
   dsGheTrong: [Int]
+  soGhe: Int
   loaiXe: String
   quangDuong: Int
   thoiGian: Int
@@ -30,9 +31,9 @@ type Query {
 }
 
 type Mutation {
-  themChuyen(input: ChuyenXeInput!): Boolean
-  capNhatChuyen(id: ID!, input: ChuyenXeInput!): Boolean
-  xoaChuyen(id: ID!): Boolean
+  themChuyen(input: ChuyenXeInput!): Boolean @isAdmin
+  capNhatChuyen(id: ID!, input: ChuyenXeInput!): Boolean @isAdmin
+  xoaChuyen(id: ID!): Boolean @isAdmin
 }
 
 input SearchData {

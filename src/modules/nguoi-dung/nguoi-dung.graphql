@@ -17,15 +17,15 @@ type LoginRespone {
 }
 
 type Query {
-  me: NguoiDung
+  me: NguoiDung @isAuthenticated
   getAllNguoiDung: [NguoiDung]
 }
 
 type Mutation {
   login(userName: String!, password: String!): LoginRespone
   dangKyTaiKhoan(input: NguoiDungInput!): Boolean
-  capNhatThongTin(input: NguoiDungInput!): Boolean
-  thayDoiMatKhau(oldPassword: String!, newPassword: String!): Boolean
+  capNhatThongTin(input: NguoiDungInput!): Boolean @isAuthenticated
+  thayDoiMatKhau(oldPassword: String!, newPassword: String!): Boolean @isAuthenticated
 }
 
 input NguoiDungInput {

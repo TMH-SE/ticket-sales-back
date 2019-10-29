@@ -25,7 +25,6 @@ type Mutation {
 
 input VeInput {
   chuyenXeId: ID
-  khachHangId: ID
   khachHangInfo: KhachHangInput
   viTriGhe: [Int]
 }

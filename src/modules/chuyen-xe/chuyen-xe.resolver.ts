@@ -41,12 +41,12 @@ export class ChuyenXeResolver {
           tuyens[tuyenXeId] = { diemDi, diemDen, quangDuong, thoiGian, giaVe }
         }
         if (!xes[xeId]) {
-          const { loaiXe } = await this.commonService.getItemWithKey(
+          const { loaiXe, soGhe } = await this.commonService.getItemWithKey(
             'DH2Data',
             'dh2_xe',
             xeId
           )
-          xes[xeId] = { loaiXe }
+          xes[xeId] = { loaiXe, soGhe }
         }
         return {
           id,
@@ -69,6 +69,12 @@ export class ChuyenXeResolver {
   async timChuyen(@Args('searchData') searchData: SearchData) {
     try {
       const { diemDi, diemDen, thoiGianKhoiHanh, soLuong } = searchData
+      const nextDate = new Date().setDate(
+        new Date(thoiGianKhoiHanh).getDate() + 1
+      )
+      console.log(
+        new Date(new Date(nextDate).toLocaleDateString()).getTime() - 1
+      )
       const data = await this.commonService.getItemsByIndex(
         'DH2Data',
         'TuyenXeIndex',
@@ -102,19 +108,20 @@ export class ChuyenXeResolver {
           ':tuyenXeId': data[0].id,
           ':soLuong': soLuong,
           ':date1': thoiGianKhoiHanh,
-          ':date2': thoiGianKhoiHanh + 24 * 60 * 60 * 1000 - 1
+          ':date2':
+            new Date(new Date(nextDate).toLocaleDateString()).getTime() - 1
         }
       )
       const xes = {}
       const allChuyen = chuyens.map(async chuyen => {
         const { id, xeId, tuyenXeId, soGheTrong, dsGheTrong } = chuyen
         if (!xes[xeId]) {
-          const { loaiXe } = await this.commonService.getItemWithKey(
+          const { loaiXe, soGhe } = await this.commonService.getItemWithKey(
             'DH2Data',
             'dh2_xe',
             xeId
           )
-          xes[xeId] = { loaiXe }
+          xes[xeId] = { loaiXe, soGhe }
         }
         return {
           id,
