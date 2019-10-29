@@ -17,7 +17,7 @@ export class GraphqlService {
         const { currentUser } = ctx
 
         if (!currentUser) {
-          throw new ApolloError('Unauthorized', '401')
+          throw new ApolloError('Forbidden', '403')
         }
 
         return next()
@@ -25,7 +25,7 @@ export class GraphqlService {
       isAdmin: (next, source, args, ctx) => {
         const { currentUser } = ctx
         if (!currentUser.isAdmin) {
-          throw new ApolloError('Unauthorized', '401')
+          throw new ApolloError('Forbidden', '403')
         }
 
         return next()
