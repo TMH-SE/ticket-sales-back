@@ -70,8 +70,14 @@ export class ChuyenXeResolver {
     try {
       const { diemDi, diemDen, thoiGianKhoiHanh, soLuong } = searchData
       console.log(thoiGianKhoiHanh)
-      console.log(new Date(thoiGianKhoiHanh))
-      console.log(new Date(thoiGianKhoiHanh).setHours(23, 59, 59, 0))
+      console.log(
+        new Date(new Date(thoiGianKhoiHanh).toLocaleDateString('vn-VN'))
+      )
+      console.log(
+        new Date(
+          new Date(thoiGianKhoiHanh).toLocaleDateString('vn-VN')
+        ).setHours(23, 59, 59, 0)
+      )
       const data = await this.commonService.getItemsByIndex(
         'DH2Data',
         'TuyenXeIndex',
@@ -105,7 +111,9 @@ export class ChuyenXeResolver {
           ':tuyenXeId': data[0].id,
           ':soLuong': soLuong,
           ':date1': thoiGianKhoiHanh,
-          ':date2': new Date(thoiGianKhoiHanh).setHours(23, 59, 59, 0)
+          ':date2': new Date(
+            new Date(thoiGianKhoiHanh).toLocaleDateString('vn-VN')
+          ).setHours(23, 59, 59, 0)
         }
       )
       const xes = {}
