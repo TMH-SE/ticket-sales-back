@@ -72,8 +72,9 @@ export class ChuyenXeResolver {
       const nextDate = new Date().setDate(
         new Date(thoiGianKhoiHanh).getDate() + 1
       )
+      console.log(nextDate)
       console.log(
-        new Date(new Date(nextDate).toLocaleDateString()).getTime() - 1
+        new Date(new Date(nextDate).toLocaleDateString('vn-VN')).getTime() - 1
       )
       const data = await this.commonService.getItemsByIndex(
         'DH2Data',
@@ -109,7 +110,7 @@ export class ChuyenXeResolver {
           ':soLuong': soLuong,
           ':date1': thoiGianKhoiHanh,
           ':date2':
-            new Date(new Date(nextDate).toLocaleDateString()).getTime() - 1
+            new Date(new Date(nextDate).toLocaleDateString('vn-VN')).getTime() - 1
         }
       )
       const xes = {}
