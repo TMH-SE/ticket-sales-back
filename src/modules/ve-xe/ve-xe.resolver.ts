@@ -20,7 +20,7 @@ export class VeXeResolver {
         'dh2_chuyen',
         input.chuyenXeId
       )
-      const khachHangId = currentUser.id
+      const khachHangId = currentUser && currentUser.id
       input.viTriGhe.map(async pos => {
         await this.commonService.createItem('VeXe', null, {
           ...input,

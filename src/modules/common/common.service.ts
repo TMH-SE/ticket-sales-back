@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { docClient } from '@constants'
-import { v1 as uuid } from 'uuid'
+
 import { ApolloError } from 'apollo-server-express'
 import { NguoiDung } from '@entities'
+import { docClient } from '@constants'
+import { v1 as uuid } from 'uuid'
 
 @Injectable()
 export class CommonService {
@@ -242,6 +243,7 @@ export class CommonService {
         return null
       }
     } catch (error) {
+      console.log(123)
       throw new ApolloError(error, error.code)
     }
   }

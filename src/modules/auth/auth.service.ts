@@ -1,8 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common'
 import * as jwt from 'jsonwebtoken'
+
+import { Injectable, Logger } from '@nestjs/common'
+
 import { ApolloError } from 'apollo-server-core'
-import { NguoiDung } from '@entities'
 import { CommonService } from '../common/common.service'
+import { NguoiDung } from '@entities'
 import { isPasswordMatched } from '@utils'
 
 @Injectable()
@@ -42,19 +44,21 @@ export class AuthService {
   async verifyToken(token: string) {
     try {
       const decoded = await jwt.verify(token, process.env.SECRET_KEY)
-      const account = await this.commonService.getItemWithKey(
-        'NguoiDung',
-        null,
-        decoded.id
-      )
-
-      if (!account) {
-        throw new ApolloError('Unauthorized', '401')
-      } else if (!account.trangThai) {
-        throw new ApolloError('Locked', '423')
+      if (decoded) {
+        const account = await this.commonService.getItemWithKey(
+          'NguoiDung',
+          null,
+          decoded.id
+        )
+        if (!account) {
+          throw new ApolloError('Unauthorized', '401')
+        } else if (!account.trangThai) {
+          throw new ApolloError('Locked', '423')
+        }
+        return { currentUser: account }
+      } else {
+        return null
       }
-
-      return { currentUser: account }
     } catch (error) {
       throw new ApolloError(error, error.extensions.code)
     }
