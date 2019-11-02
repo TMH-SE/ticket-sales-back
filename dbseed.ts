@@ -280,6 +280,10 @@ async function dbseed() {
               {
                 AttributeName: 'khachHangId',
                 AttributeType: 'S'
+              },
+              {
+                AttributeName: 'chuyenXeId',
+                AttributeType: 'S'
               }
             ],
             KeySchema: [
@@ -304,13 +308,31 @@ async function dbseed() {
                   ReadCapacityUnits: 1,
                   WriteCapacityUnits: 1
                 }
+              },
+              {
+                IndexName: 'ChuyenXeIdIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'chuyenXeId',
+                    KeyType: 'HASH'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
               }
             ]
           })
         }
-        dynamodb.createTable(params, error => {
+        dynamodb.createTable(params, (error, data) => {
           if (error) {
             console.error(error)
+          } else {
+            console.log(data)
           }
         })
       })

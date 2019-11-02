@@ -181,10 +181,22 @@ export class ChuyenXeResolver {
   }
 
   @Mutation()
-  xoaChuyen(@Args('id') id: string) {
+  async xoaChuyen(@Args('id') id: string) {
     try {
-      this.commonService.deleteItem('DH2Data', 'dh2_chuyen', id)
-      return true
+      const ve = await this.commonService.getItemsByIndex(
+        'VeXe',
+        'ChuyenXeIdIndex',
+        '#chuyenXeId = :chuyenXeId',
+        null,
+        { '#chuyenXeId': 'chuyenXeId' },
+        { ':chuyenXeId': id }
+      )
+      if (ve.length <= 0) {
+        await this.commonService.deleteItem('DH2Data', 'dh2_chuyen', id)
+        return true
+      } else {
+        return false
+      }
     } catch (error) {
       throw new ApolloError(error)
     }
