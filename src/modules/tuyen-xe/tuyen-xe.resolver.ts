@@ -84,10 +84,28 @@ export class TuyenXeResolver {
   }
 
   @Mutation()
-  xoaTuyen(@Args('id') id: string) {
+  async xoaTuyen(@Args('id') id: string) {
     try {
-      this.commonService.deleteItem('DH2Data', 'dh2_tuyen', id)
-      return true
+      const data = await this.commonService.getItemsByIndex(
+        'DH2Data',
+        'ChuyenXeIndex',
+        '#pk = :pk and #tuyenXeId = :tuyenXeId',
+        null,
+        {
+          '#pk': 'pk',
+          '#tuyenXeId': 'tuyenXeId'
+        },
+        {
+          ':pk': 'dh2_chuyen',
+          ':tuyenXeId': id
+        }
+      )
+      if (data.length <= 0) {
+        this.commonService.deleteItem('DH2Data', 'dh2_tuyen', id)
+        return true
+      } else {
+        return false
+      }
     } catch (error) {
       throw new ApolloError(error)
     }
