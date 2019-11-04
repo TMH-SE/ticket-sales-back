@@ -15,8 +15,17 @@ type VeXe {
   trangThai: Boolean
 }
 
+type VeXeRespone {
+  id: ID
+  diemDi: String
+  diemDen: String
+  thoiGianKhoiHanh: Float
+  viTriGhe: Int
+  giaVe: Float
+}
+
 type Query {
-  getVeXeByKhachHang(khachHangId: ID): VeXe
+  getVeXeByKhachHang: [VeXeRespone]
 }
 
 type Mutation {
