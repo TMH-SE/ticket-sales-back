@@ -87,8 +87,26 @@ export class XeResolver {
   @Mutation()
   async xoaXe(@Args('id') id: string) {
     try {
-      this.commonService.deleteItem('DH2Data', 'dh2_xe', id)
-      return true
+      const data = await this.commonService.getItemsByIndex(
+        'DH2Data',
+        'XeIdIndex',
+        '#pk = :pk and #xeId = :xeId',
+        null,
+        {
+          '#pk': 'pk',
+          '#xeId': 'xeId'
+        },
+        {
+          ':pk': 'dh2_chuyen',
+          ':xeId': id
+        }
+      )
+      if (data.length <= 0) {
+        this.commonService.deleteItem('DH2Data', 'dh2_xe', id)
+        return true
+      } else {
+        return false
+      }
     } catch (error) {
       throw new ApolloError(error)
     }

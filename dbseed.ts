@@ -185,6 +185,10 @@ async function dbseed() {
                 AttributeType: 'S'
               },
               {
+                AttributeName: 'xeId',
+                AttributeType: 'S'
+              },
+              {
                 AttributeName: 'diemDi',
                 AttributeType: 'S'
               },
@@ -237,6 +241,26 @@ async function dbseed() {
                   },
                   {
                     AttributeName: 'tuyenXeId',
+                    KeyType: 'RANGE'
+                  }
+                ],
+                Projection: {
+                  ProjectionType: 'ALL'
+                },
+                ProvisionedThroughput: {
+                  ReadCapacityUnits: 1,
+                  WriteCapacityUnits: 1
+                }
+              },
+              {
+                IndexName: 'XeIdIndex',
+                KeySchema: [
+                  {
+                    AttributeName: 'pk',
+                    KeyType: 'HASH'
+                  },
+                  {
+                    AttributeName: 'xeId',
                     KeyType: 'RANGE'
                   }
                 ],
@@ -328,11 +352,11 @@ async function dbseed() {
             ]
           })
         }
-        dynamodb.createTable(params, (error, data) => {
+        dynamodb.createTable(params, (error, dat) => {
           if (error) {
             console.error(error)
           } else {
-            console.log(data)
+            console.log(dat)
           }
         })
       })
